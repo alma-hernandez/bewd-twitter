@@ -10,25 +10,30 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_01_19_204810) do
+ActiveRecord::Schema.define(version: 2024_01_19_205848) do
 
   create_table "sessions", force: :cascade do |t|
     t.string "token"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
     t.integer "user_id"
-    t.datetime "timestamps"
+    t.index ["user_id"], name: "index_sessions_on_user_id"
   end
 
   create_table "tweets", force: :cascade do |t|
     t.string "message"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
     t.integer "user_id"
-    t.datetime "timestamps"
+    t.index ["user_id"], name: "index_tweets_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
     t.string "username"
     t.string "email"
     t.string "password"
-    t.datetime "timestamps"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
 end
