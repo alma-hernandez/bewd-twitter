@@ -12,6 +12,7 @@ RSpec.describe UsersController, type: :controller do
           username: 'test'
         }
       }
+    end
 
       expect(response.body).to eq({
         user: {
