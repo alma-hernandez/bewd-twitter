@@ -7,30 +7,41 @@ class TweetsController < ApplicationController
     tweet = current_user.tweets.new(tweet_params)
 
     if tweet.save!
-      render json: { message: 'Tweet created successfully' }
+      render json: { tweet: { username: tweet.user.username, message: tweet.message } }
     else
-      render json: { error: tweet.errors.full_messages.join(', ') }, status: :unprocessable_entity
+      render json: { errors: tweet.errors.full_messages }, status: :unprocessable_entity
     end
   end
+ 
 
   def destroy
     tweet = Tweet.find_by(id: params[:id])
 
     if tweet && tweet.user == current_user
       tweet.destroy
-      render json: { message: 'Tweet deleted successfully' }
+      render json: { success: true }
     else
-      render json: { error: "Tweet not found or you don't have permission to delete" }, status: :not_found
+      render json: { success: false }, status: :not_found
     end
   end
 
   def index
     @tweets = Tweet.all
-    render 'tweets/index'
+    render json: { tweets: @tweets.map {|tweet| { id: tweet.id, username: tweet.user.username, message: tweet.message}}}
   end
 
   def index_by_user
     user = User.find_by(username: params[:username])
+
+    if user
+      @tweets = user.tweets
+      render json: {
+        tweets: @tweets.map { |tweet| { id: tweet.id, username: user.username, message: tweet.message } }
+      }
+    else
+      render json: { error: 'Test Message' }, status: :not_found
+    end
+  end
 
     if user
       @tweets = user.tweets
