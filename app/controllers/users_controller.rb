@@ -5,9 +5,14 @@ class UsersController < ApplicationController
     user = User.new(user_params)
 
     if user.save
-      render json: { message: "User created successfully" }
+      render json: {
+        user: {
+          username: user.username,
+          email: user.email
+        }
+      }
     else
-      render json: { error: user.errors.full_messages.join(", ") }, status: :unprocessable_entity
+      render json: { error: user.errors.full_messages.join(', ') }, status: :unprocessable_entity
     end
   end
 
@@ -17,4 +22,3 @@ class UsersController < ApplicationController
     params.require(:user).permit(:password, :username)
   end
 end
-
