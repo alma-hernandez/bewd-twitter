@@ -15,8 +15,12 @@ RSpec.describe TweetsController, type: :controller do
         }
       }
 
-      expect(response).to have_http_status(:success)
-      expect(response.body).to include('Tweet created successfully')
+      expect(response.body).to eq({
+        tweet: {
+          username: user.username,
+          message: 'Test Message'
+        }
+      }.to_json)
     end
   end
 

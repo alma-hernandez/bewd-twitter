@@ -15,10 +15,8 @@ RSpec.describe SessionsController, type: :controller do
       }
 
       expect(response.body).to eq({
-  success: true,
-  authenticated: true
-}.to_json)
-
+        success: true
+      }.to_json)
     end
   end
 
