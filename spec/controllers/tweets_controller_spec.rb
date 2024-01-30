@@ -24,6 +24,7 @@ RSpec.describe TweetsController, type: :controller do
     end
   end
 
+
   describe 'GET /tweets' do
     it 'renders all tweets object' do
       user = FactoryBot.create(:user)
@@ -95,3 +96,4 @@ RSpec.describe TweetsController, type: :controller do
     end
   end
 end
+
