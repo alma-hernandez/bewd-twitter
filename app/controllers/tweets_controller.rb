@@ -12,7 +12,6 @@ class TweetsController < ApplicationController
       render json: { errors: tweet.errors.full_messages }, status: :unprocessable_entity
     end
   end
- 
 
   def destroy
     tweet = Tweet.find_by(id: params[:id])
@@ -26,8 +25,8 @@ class TweetsController < ApplicationController
   end
 
   def index
-    @tweets = Tweet.all
-    render json: { tweets: @tweets.map {|tweet| { id: tweet.id, username: tweet.user.username, message: tweet.message}}}
+    @tweets = Tweet.all.order(created_at: :desc)
+    render json: { tweets: @tweets.map { |tweet| { id: tweet.id, username: tweet.user.username, message: tweet.message } } }
   end
 
   def index_by_user
@@ -40,14 +39,6 @@ class TweetsController < ApplicationController
       }
     else
       render json: { error: 'Test Message' }, status: :not_found
-    end
-  end
-
-    if user
-      @tweets = user.tweets
-      render 'tweets/index'
-    else
-      render json: { error: 'User not found' }, status: :not_found
     end
   end
 
